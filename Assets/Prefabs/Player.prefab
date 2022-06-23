@@ -49,9 +49,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75a3ac467ba639d47a434778482f2b17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 7
-  rigidbody: {fileID: 0}
-  collider2d: {fileID: 0}
+  walkSpeed: 3
+  rayCastDist: 0.01
+  climbSpeed: 2
+  horizontalAcceleration: 1
 --- !u!212 &-4868138082489716673
 SpriteRenderer:
   m_ObjectHideFlags: 0
