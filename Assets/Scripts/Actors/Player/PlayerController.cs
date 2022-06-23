@@ -21,8 +21,11 @@ public class PlayerController : MonoBehaviour
     private float horizontalVelocity, verticalVelocity;
     private PlayerInputActions playerControls;
     private InputAction move;
-    private InputAction fire;
-    private ContactFilter2D ladderFilter;
+    private InputAction interact;
+    private ContactFilter2D ladderFilter, interactableFilter;
+    private Interactable focus;
+    Collider2D[] interactableResults;
+
 
     void Awake()
     {
@@ -33,29 +36,39 @@ public class PlayerController : MonoBehaviour
         actorBounds = collider2d.bounds;
         playerControls = new PlayerInputActions();
         ladderFilter = new ContactFilter2D();
-        // 6 is the user defined climbable layer
+        // 6 is the user defined Climbable layer
         ladderFilter.SetLayerMask(1 << 6);
+        // 7 is the user defined Interactable layer
+        interactableFilter.SetLayerMask(1 << 7);
+        interactableResults = new Collider2D[1];
     }
 
     void Update()
     {
+        // SelectNearestInteractable();
+
         Vector2 vect = move.ReadValue<Vector2>();
         animator.SetBool("isRunning", vect.x != 0);
-        animator.SetBool("isClimbing", vect.y != 0 && isNearClimbable());
+        animator.SetBool("isClimbing", vect.y != 0 && IsNearClimbable());
     }
 
     protected void OnEnable()
     {
         move = playerControls.Player.Move;
         move.Enable();
+        interact = playerControls.Player.Interact;
+        interact.Enable();
+        interact.performed += Interact;
     }
 
     protected void OnDisable()
     {
         move.Disable();
+        interact.Disable();
     }
 
-    private void FixedUpdate() {
+    private void FixedUpdate()
+    {
         Move(move.ReadValue<Vector2>());
     }
 
@@ -78,7 +91,7 @@ public class PlayerController : MonoBehaviour
 
     private void CalcVertical(float targetVel)
     {
-        if (isNearClimbable())
+        if (IsNearClimbable())
         {
             verticalVelocity = targetVel * climbSpeed;
             return;
@@ -92,16 +105,50 @@ public class PlayerController : MonoBehaviour
     {
         var b = new Bounds(transform.position + actorBounds.center, actorBounds.size);
         // 3 is the user defined layer for the ground
-        
+
         _collidesUp = Physics2D.BoxCast(transform.position, actorBounds.size, 0, Vector2.up, rayCastDist, 1 << 3);
         _collidesRight = Physics2D.BoxCast(transform.position + Vector3.up, actorBounds.size, 0, Vector2.right, rayCastDist, 1 << 3);
         _collidesDown = Physics2D.BoxCast(transform.position, actorBounds.size, 0, Vector2.down, rayCastDist, 1 << 3);
         _collidesLeft = Physics2D.BoxCast(transform.position + Vector3.up, actorBounds.size, 0, Vector2.left, rayCastDist, 1 << 3);
     }
 
-    private bool isNearClimbable() {
+    private bool IsNearClimbable()
+    {
         Collider2D[] results = new Collider2D[1];
         rigidbody2d.OverlapCollider(ladderFilter, results);
         return results[0];
+    }
+    // private void SelectNearestInteractable()
+    // {
+    //     interactableResults[0] = null;
+    //     rigidbody2d.OverlapCollider(interactableFilter, interactableResults);
+    //     if (interactableResults[0] == null)
+    //     {
+    //         RemoveFocus();
+    //         return;
+    //     }
+    //     SetFocus(interactableResults[0].gameObject.GetComponent<Interactable>());
+    // }
+
+    public void SetFocus(Interactable target)
+    {
+        RemoveFocus();
+        focus = target;
+        target.OnFocused();
+    }
+
+    public void RemoveFocus()
+    {
+        if (focus != null)
+            focus.OnDefocused();
+        focus = null;
+    }
+
+    private void Interact(InputAction.CallbackContext context)
+    {
+        if (focus != null)
+        {
+            focus.Interact();
+        }
     }
 }
