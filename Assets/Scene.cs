@@ -5,8 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class Scene : MonoBehaviour
 {
-    public ScoreScript GameScene;  
+    //public ScoreScript GameScene;  
     public int BHCounter;  
+    
+
 	//  int BHCounter
 	public void LoadScene(string Scene) {  
 SceneManager.LoadScene(1);  
@@ -17,7 +19,10 @@ SceneManager.LoadScene(1);
     void Start()
     {
         //GameScene.Backbone.GetComponent<ScoreScript>();  
-        GameScene.Update();  
+        //GameScene.Update();  
+        //gameObject.Find("Backbone").GetComponent<ScoreScript>().Update();    
+        var m_ScoreScript = GameObject.FindObjectOfType(typeof(ScoreScript)) as ScoreScript;  
+        m_ScoreScript.Start();  
         //BHCounter = 1;  
     }
 
