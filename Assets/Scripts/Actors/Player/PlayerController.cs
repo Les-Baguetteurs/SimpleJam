@@ -103,6 +103,8 @@ public class PlayerController : MonoBehaviour
 
     private void CheckCollisions()
     {
+        // FIXME There is a bug somewhere that allows you to walk slightly into walls and then become stuck.
+        // Try very hard to change to using actual Rigidbody2D instead of collision checking
         var b = new Bounds(transform.position + actorBounds.center, actorBounds.size);
         // 3 is the user defined layer for the ground
 
@@ -118,17 +120,6 @@ public class PlayerController : MonoBehaviour
         rigidbody2d.OverlapCollider(ladderFilter, results);
         return results[0];
     }
-    // private void SelectNearestInteractable()
-    // {
-    //     interactableResults[0] = null;
-    //     rigidbody2d.OverlapCollider(interactableFilter, interactableResults);
-    //     if (interactableResults[0] == null)
-    //     {
-    //         RemoveFocus();
-    //         return;
-    //     }
-    //     SetFocus(interactableResults[0].gameObject.GetComponent<Interactable>());
-    // }
 
     public void SetFocus(Interactable target)
     {
