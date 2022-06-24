@@ -20,12 +20,13 @@ public class ScoreScript : MonoBehaviour
     public void Update()
     {
         score += 1;  
-        if (GameObject.FindGameObjectWithTag("Player") != null) {  
-            score += 1 * Time.deltaTime;  
+        //if (GameObject.FindGameObjectWithTag("Player") != null) {  
+        //    score += 1 * Time.deltaTime;  
           
             
             Debug.Log(score);
         Debug.Log(score);
+        {
         }
     }
 

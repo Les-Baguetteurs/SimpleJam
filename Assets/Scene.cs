@@ -21,14 +21,16 @@ SceneManager.LoadScene(1);
         //GameScene.Backbone.GetComponent<ScoreScript>();  
         //GameScene.Update();  
         //gameObject.Find("Backbone").GetComponent<ScoreScript>().Update();    
-        var m_ScoreScript = GameObject.FindObjectOfType(typeof(ScoreScript)) as ScoreScript;  
-        m_ScoreScript.Start();  
+        //var m_ScoreScript = GameObject.FindObjectOfType(typeof(ScoreScript)) as ScoreScript;  
+        //m_ScoreScript.Start();  
         //BHCounter = 1;  
     }
 
     // Update is called once per frame
     void Update()  
     {
+        var m_ScoreScript = GameObject.FindObjectOfType(typeof(ScoreScript)) as ScoreScript;  
+        m_ScoreScript.Start();
         //BHCounter =+ 1;  
         //debug.log(BHCounter);  
     }
