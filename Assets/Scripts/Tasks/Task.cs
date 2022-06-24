@@ -11,6 +11,11 @@ public class Task : MonoBehaviour
 
     public virtual void OpenUI()
     {
-        Debug.Log("Task has been opened");
+        Instantiate(gameObject);
+    }
+
+    public virtual void CloseUI()
+    {
+        Destroy(gameObject);
     }
 }
