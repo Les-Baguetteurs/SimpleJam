@@ -49,6 +49,10 @@ public class PlayerController : MonoBehaviour
 
         Vector2 vect = move.ReadValue<Vector2>();
         animator.SetBool("isRunning", vect.x != 0);
+        if (vect.x > 0)
+            transform.localScale = new Vector3(2.4f, 2.4f, 1);
+        else if (vect.x < 0)
+            transform.localScale = new Vector3(-2.4f, 2.4f, 1);
         animator.SetBool("isClimbing", vect.y != 0 && IsNearClimbable());
     }
 
@@ -94,9 +98,11 @@ public class PlayerController : MonoBehaviour
         if (IsNearClimbable())
         {
             verticalVelocity = targetVel * climbSpeed;
-            return;
         }
-        verticalVelocity += Physics2D.gravity.y * Time.fixedDeltaTime;
+        else
+        {
+            verticalVelocity += Physics2D.gravity.y * Time.fixedDeltaTime;
+        }
         if (_collidesUp && verticalVelocity > 0) verticalVelocity = 0;
         if (_collidesDown && verticalVelocity < 0) verticalVelocity = 0;
     }
@@ -108,10 +114,10 @@ public class PlayerController : MonoBehaviour
         var b = new Bounds(transform.position + actorBounds.center, actorBounds.size);
         // 3 is the user defined layer for the ground
 
-        _collidesUp = Physics2D.BoxCast(transform.position, actorBounds.size, 0, Vector2.up, rayCastDist, 1 << 3);
-        _collidesRight = Physics2D.BoxCast(transform.position + Vector3.up, actorBounds.size, 0, Vector2.right, rayCastDist, 1 << 3);
-        _collidesDown = Physics2D.BoxCast(transform.position, actorBounds.size, 0, Vector2.down, rayCastDist, 1 << 3);
-        _collidesLeft = Physics2D.BoxCast(transform.position + Vector3.up, actorBounds.size, 0, Vector2.left, rayCastDist, 1 << 3);
+        _collidesUp = Physics2D.BoxCast(transform.position + Vector3.up * .1f, actorBounds.size, 0, Vector2.up, rayCastDist, 1 << 3);
+        _collidesRight = Physics2D.BoxCast(transform.position + Vector3.right * .1f + Vector3.up * .1f, actorBounds.size, 0, Vector2.right, rayCastDist, 1 << 3);
+        _collidesDown = Physics2D.BoxCast(transform.position + Vector3.down * .1f, actorBounds.size, 0, Vector2.down, rayCastDist, 1 << 3);
+        _collidesLeft = Physics2D.BoxCast(transform.position + Vector3.left * .1f + Vector3.up * .1f, actorBounds.size, 0, Vector2.left, rayCastDist, 1 << 3);
     }
 
     private bool IsNearClimbable()

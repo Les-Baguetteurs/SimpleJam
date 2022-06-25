@@ -16,6 +16,7 @@ public class Task : MonoBehaviour
 
     public virtual void CloseUI()
     {
+        TaskManager.Instance.addPoints(1);
         Destroy(gameObject);
     }
 }
