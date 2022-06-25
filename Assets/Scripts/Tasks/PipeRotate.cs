@@ -18,7 +18,7 @@ public void Start()
    public void RotatePipe( GameObject button)
    {
     button.transform.Rotate(new Vector3(0,0,90));
-    rotations = (rotations + 1) % 3;
+    rotations++;
     if (CheckRotations())
     {
         CloseUI();
@@ -40,7 +40,7 @@ public void Start()
    {
     foreach ( GameObject pipe in pipes)
     {
-        if ( (rotations % 3) == 0 )
+        if ( (rotations % 24) == 0 )
         {
             return true;
         }
