@@ -5,49 +5,48 @@ using Unity.UI;
 
 public class PipeRotate : Task
 {
-public GameObject[] pipes;
-int rotations = 0;
+    public GameObject[] pipes;
+    int[] rotations;
 
-public void Start()
-{
-    RandomizeRotations();
-
-}
-
-
-   public void RotatePipe( GameObject button)
-   {
-    button.transform.Rotate(new Vector3(0,0,90));
-    rotations++;
-    if (CheckRotations())
+    public override void Start()
     {
-        CloseUI();
+        base.Start();
+        rotations = new int[pipes.Length];
+        RandomizeRotations();
     }
-    Debug.Log("rotations " + rotations);
 
-   }
 
-   public void RandomizeRotations ()
-   {
-    for (int j = 0; j< 6; j++)
+    public void RotatePipe(int j)
     {
-        RotatePipe( pipes[j]);
-    }
-    
-   }
-
-   public bool CheckRotations()
-   {
-    foreach ( GameObject pipe in pipes)
-    {
-        if ( (rotations % 24) == 0 )
+        pipes[j].transform.Rotate(new Vector3(0, 0, 90));
+        rotations[j]++;
+        if (CheckRotations())
         {
-            return true;
+            CompleteTask();
         }
+
     }
-    return false;
-   }
 
+    public void RandomizeRotations()
+    {
+        for (int j = 0; j < 6; j++)
+        {
+            int num = Random.Range(0, 4);
+            for (int i = 0; i < num; i++)
+                RotatePipe(j);
+        }
 
-   
+    }
+
+    public bool CheckRotations()
+    {
+        foreach (int rotationCount in rotations)
+        {
+            if (rotationCount % 4 != 0)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 }

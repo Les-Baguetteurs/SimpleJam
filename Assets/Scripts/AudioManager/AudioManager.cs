@@ -94,7 +94,6 @@ public class AudioManager : MonoBehaviour
         audioSources[flip].PlayScheduled(nextEventTime);
 		
         nextEventTime += audioSources[flip].clip.length;
-		Debug.Log(nextEventTime - startTime);
         flip = 1 - flip;
     }
 }

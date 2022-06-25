@@ -9,8 +9,9 @@ public class Task : MonoBehaviour
     
     Interactable interactable;
 
-    void Start() {
+    public virtual void Start() {
         timer = gameObject.GetComponentInChildren<TMP_Text>();
+        Debug.Log("timer: " + timer);
     }
     public virtual void Update()
     {

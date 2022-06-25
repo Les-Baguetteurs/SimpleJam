@@ -115,7 +115,6 @@ public class TaskManager : MonoBehaviour
             music = "stage2";
         else
             music = "stage3";
-        Debug.Log("Scheduling music: " + music);
         AudioManager.Instance.SetScheduledSound(music);
     }
 }
