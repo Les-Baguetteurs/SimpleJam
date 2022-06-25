@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public sealed class Interactable : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public sealed class Interactable : MonoBehaviour
     public Sprite focusedSprite;
     private SpriteRenderer spriteRenderer;
     private Collider2D collider2d;
+    private TMP_Text timer;
+    private float timeLeft;
     private bool isActivated;
 
     bool isFocus = false;
@@ -17,7 +20,32 @@ public sealed class Interactable : MonoBehaviour
     {
         collider2d = GetComponent<Collider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        timer = GetComponentInChildren<TMP_Text>();
         isActivated = false;
+    }
+    void Start()
+    {
+        timeLeft = TaskManager.Instance.timePerTask;
+    }
+
+    void Update()
+    {
+        if (!isActivated)
+        {
+            timer.text = "OK";
+            return;
+        }
+        timeLeft -= Time.deltaTime;
+        timer.text = timeLeft.ToString("00.00");
+        if (timeLeft < 0)
+        {
+            TaskManager.Instance.FailTask();
+            isActivated = false;
+        }
+    }
+
+    public float GetTimeLeft() {
+        return timeLeft;
     }
 
     public void OnFocused()
@@ -32,17 +60,25 @@ public sealed class Interactable : MonoBehaviour
         spriteRenderer.sprite = defaultSprite;
     }
 
-    public void Activate() {
+    public bool Activate()
+    {
+        if (isActivated) return false;
         isActivated = true;
-        Debug.Log(gameObject.name + " has been activated");
+        timeLeft = TaskManager.Instance.timePerTask;
         // TODO set texture to broken
+        return true;
+    }
+
+    public void CompleteTask()
+    {
+        isActivated = false;
+        TaskManager.Instance.CompleteTask(1);
     }
 
     public void Interact()
     {
         if (!isActivated || !isFocus) return;
-        task.OpenUI();
-        isActivated = false;
+        task.OpenUI(this);
         OnDefocused();
     }
 
