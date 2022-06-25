@@ -13,24 +13,22 @@ public class TaskSpamButton : Task
     void Awake()
     {
         progressBar = GetComponentInChildren<Slider>();
-    }
-    public override void OpenUI()
-    {
-        base.OpenUI();
+        Debug.Log(progressBar);
     }
 
     public void OnClick()
     {
         currentFill += fillPerClick;
     }
-    void Update()
+    override public void Update()
     {
+        base.Update();
         currentFill = Mathf.Clamp01(currentFill - decayPerSecond * Time.deltaTime);
         progressBar.value = currentFill;
         if (currentFill == 1)
         {
             decayPerSecond = 0;
-            CloseUI();
+            CompleteTask();
         }
     }
 }

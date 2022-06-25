@@ -1,14 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
-public class Interactable : MonoBehaviour
+public sealed class Interactable : MonoBehaviour
 {
     public Task task;
     public Sprite defaultSprite;
     public Sprite focusedSprite;
     private SpriteRenderer spriteRenderer;
     private Collider2D collider2d;
+    private TMP_Text timer;
+    private float timeLeft;
+    private bool isActivated;
 
     bool isFocus = false;
 
@@ -16,6 +20,32 @@ public class Interactable : MonoBehaviour
     {
         collider2d = GetComponent<Collider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        timer = GetComponentInChildren<TMP_Text>();
+        isActivated = false;
+    }
+    void Start()
+    {
+        timeLeft = TaskManager.Instance.timePerTask;
+    }
+
+    void Update()
+    {
+        if (!isActivated)
+        {
+            timer.text = "OK";
+            return;
+        }
+        timeLeft -= Time.deltaTime;
+        timer.text = timeLeft.ToString("00.00");
+        if (timeLeft < 0)
+        {
+            TaskManager.Instance.FailTask();
+            isActivated = false;
+        }
+    }
+
+    public float GetTimeLeft() {
+        return timeLeft;
     }
 
     public void OnFocused()
@@ -30,18 +60,31 @@ public class Interactable : MonoBehaviour
         spriteRenderer.sprite = defaultSprite;
     }
 
-    public void Interact()
+    public bool Activate()
     {
-        task.OpenUI();
+        if (isActivated) return false;
+        isActivated = true;
+        timeLeft = TaskManager.Instance.timePerTask;
+        // TODO set texture to broken
+        return true;
     }
 
-    void Update()
+    public void CompleteTask()
     {
-        if (!isFocus) return;
+        isActivated = false;
+        TaskManager.Instance.CompleteTask(1);
+    }
+
+    public void Interact()
+    {
+        if (!isActivated || !isFocus) return;
+        task.OpenUI(this);
+        OnDefocused();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (!isActivated) return;
         PlayerController player = other.GetComponent<PlayerController>();
         if (player != null)
             player.SetFocus(this);
@@ -49,6 +92,7 @@ public class Interactable : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
+        if (!isActivated) return;
         PlayerController player = other.GetComponent<PlayerController>();
         if (player != null)
             player.RemoveFocus();
