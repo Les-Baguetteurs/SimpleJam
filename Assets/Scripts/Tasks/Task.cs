@@ -31,6 +31,11 @@ public class Task : MonoBehaviour
         CloseUI();
     }
 
+    public void FailTask() {
+        interactable.FailTask();
+        CloseUI();
+    }
+
     public void OpenUI(Interactable interactable)
     {
         Instantiate<Task>(this).SetInteractable(interactable);

@@ -39,8 +39,7 @@ public sealed class Interactable : MonoBehaviour
         timer.text = timeLeft.ToString("00.00");
         if (timeLeft < 0)
         {
-            TaskManager.Instance.FailTask();
-            isActivated = false;
+            FailTask();
         }
     }
 
@@ -73,6 +72,11 @@ public sealed class Interactable : MonoBehaviour
     {
         isActivated = false;
         TaskManager.Instance.CompleteTask(1);
+    }
+
+    public void FailTask() {
+        isActivated = false;
+        TaskManager.Instance.FailTask();
     }
 
     public void Interact()

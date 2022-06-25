@@ -2044,9 +2044,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distanceDecayPerFailure: 20
-  intensityScale: 1
+  intensityScale: 0.25
   minInterval: 2
-  maxInterval: 60
+  maxInterval: 30
   startDistance: 60
   chanceEasy: 1
   chanceMedium: 0.3
