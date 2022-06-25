@@ -356,7 +356,7 @@ GameObject:
   - component: {fileID: 687316447}
   - component: {fileID: 687316446}
   m_Layer: 5
-  m_Name: PipeTask
+  m_Name: PipeTaskUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -374,6 +374,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4fe9a2de15608848897c49379c0678e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pipes:
+  - {fileID: 890141467}
+  - {fileID: 2142513298}
+  - {fileID: 1247164313}
+  - {fileID: 2050167147}
+  - {fileID: 1532109891}
+  - {fileID: 1331642624}
 --- !u!114 &687316447
 MonoBehaviour:
   m_ObjectHideFlags: 0
