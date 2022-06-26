@@ -24,8 +24,7 @@ public class CameraManager : MonoBehaviour
     void LateUpdate() {
         float deltaX = look.ReadValue<Vector2>().x - Screen.width / 2f;
         float deltaY = look.ReadValue<Vector2>().y - Screen.height / 2f;
-        Debug.Log(look.ReadValue<Vector2>());
-        
+                
         gameObject.transform.position = new Vector3(player.transform.position.x + exponentialDecay(deltaX), player.transform.position.y + exponentialDecay(deltaY), -10);
     }
 
