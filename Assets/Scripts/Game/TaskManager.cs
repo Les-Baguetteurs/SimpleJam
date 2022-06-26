@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class TaskManager : MonoBehaviour
@@ -125,7 +126,7 @@ public class TaskManager : MonoBehaviour
     {
         if (distance <= 0)
         {
-            // TODO go to lose screen
+            SceneManager.LoadScene("GameoverScene");
         }
     }
 }
