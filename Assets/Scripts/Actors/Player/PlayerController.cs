@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public float rayCastDist = 0.01f;
     public float climbSpeed = 2;
     public float horizontalAcceleration = 1;
+    public float jumpVel = 10f;
     private SpriteRenderer spriteRenderer;
     private Rigidbody2D rigidbody2d;
     private Collider2D collider2d;
@@ -22,6 +23,7 @@ public class PlayerController : MonoBehaviour
     private PlayerInputActions playerControls;
     private InputAction move;
     private InputAction interact;
+    private InputAction jump;
     private ContactFilter2D ladderFilter, interactableFilter;
     private Interactable focus;
     Collider2D[] interactableResults;
@@ -63,6 +65,9 @@ public class PlayerController : MonoBehaviour
         interact = playerControls.Player.Interact;
         interact.Enable();
         interact.performed += Interact;
+        jump = playerControls.Player.Jump;
+        jump.Enable();
+        jump.performed += Jump;
     }
 
     protected void OnDisable()
@@ -99,7 +104,7 @@ public class PlayerController : MonoBehaviour
         {
             verticalVelocity = targetVel * climbSpeed;
         }
-        else
+        else 
         {
             verticalVelocity += Physics2D.gravity.y * Time.fixedDeltaTime;
         }
@@ -146,6 +151,13 @@ public class PlayerController : MonoBehaviour
         if (focus != null)
         {
             focus.Interact();
+        }
+    }
+
+    private void Jump(InputAction.CallbackContext context) {
+        if (_collidesDown) {
+            _collidesDown = false;
+            verticalVelocity += jumpVel;
         }
     }
 }
