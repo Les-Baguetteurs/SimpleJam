@@ -104,6 +104,7 @@ public class TaskManager : MonoBehaviour
         timeSinceLastDistanceUpdate = 0;
         activeTasks--;
         scheduleMusic();
+        
     }
 
     void scheduleMusic()
@@ -116,5 +117,11 @@ public class TaskManager : MonoBehaviour
         else
             music = "stage3";
         AudioManager.Instance.SetScheduledSound(music);
+    }
+
+    void CheckIfLost() {
+        if (distance <= 0) {
+            // TODO go to lose screen
+        }
     }
 }
