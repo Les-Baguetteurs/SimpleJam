@@ -28,7 +28,8 @@ public class TaskManager : MonoBehaviour
     int tasksCompleted;
     float nextBreak;
     public Interactable[] tasks;
-
+    bool lost = false;  
+    CanvasGroup loseScreen;  
 
     int activeTasks;
 
@@ -50,9 +51,13 @@ public class TaskManager : MonoBehaviour
     }
     void Start()
     {
+        loseScreen = GetComponent<CanvasGroup>();  
+        loseScreen.alpha = 0f;  
+        loseScreen.blocksRaycasts = true;  
+        lost = false;  
         timeElapsed = 0;
         nextBreak = 0;
-
+    
     }
 
     // Update is called once per frame
@@ -65,6 +70,9 @@ public class TaskManager : MonoBehaviour
         {
             ActivateTask();
             nextBreak = timeElapsed + Random.Range(minInterval, Mathf.Max(minInterval, maxInterval - timeElapsed * intensityScale));
+        }
+        if (distance == 67){
+            loseScreen.alpha = 1f;  
         }
         UpdateDistanceUI();
     }
@@ -116,5 +124,11 @@ public class TaskManager : MonoBehaviour
         else
             music = "stage3";
         AudioManager.Instance.SetScheduledSound(music);
+    }
+    void CheckIfLost(){
+        if (distance == 0) {
+            lost = true;  
+            loseScreen.alpha = 1f;  
+        }
     }
 }
