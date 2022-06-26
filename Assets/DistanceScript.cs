@@ -5,22 +5,41 @@ using UnityEngine;
 public class DistanceScript : MonoBehaviour
 {
     public float distance;  
+    public bool started = false;  
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
-        
+        distance = distance - (Time.deltaTime);
+
+
+        Debug.Log(distance + "m");
     }
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
-        distance = distance - (Time.deltaTime);  
         
+        
+        
+        
+        distance = distance - (Time.deltaTime);  
+        Debug.Log(distance + "m");  
+        
+        }
+
+
+    public void distanceDecrease(float decrease)    {
+
     }
-    void distanceIncrease(float increase) {  
+    
+    public void distanceIncrease(float increase) {  
         distance =+ increase;  
-        Debug.Log(distance);
+        Debug.Log(distance + "m");  
 
 
     }
+    
+    
+    
+    
 }
