@@ -33,7 +33,7 @@ public class Menu : MonoBehaviour
         }
     }
     public void pause(){
-        isPaused = true;
+        isPaused = true;  
     }
     public void Resume(){
         Canvas.alpha = 0f;  
@@ -53,7 +53,7 @@ public class Menu : MonoBehaviour
     
 
     public void MainMenu(){ 
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
     public void quitgame(){
         Application.Quit();  
