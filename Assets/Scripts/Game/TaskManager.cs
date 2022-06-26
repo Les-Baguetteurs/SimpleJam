@@ -79,7 +79,7 @@ public class TaskManager : MonoBehaviour
 
     void UpdateDistanceUI()
     {
-        distanceSlider.value = Mathf.Lerp(distance, distanceSlider.value, 
+        distanceSlider.value = Mathf.Lerp(distance, distanceSlider.value,
                                          (distanceAnimationLength - timeSinceLastDistanceUpdate) / distanceAnimationLength);
     }
 
@@ -96,6 +96,7 @@ public class TaskManager : MonoBehaviour
         distance = Mathf.Clamp(distance, 0, startDistance);
         timeSinceLastDistanceUpdate = 0;
         activeTasks--;
+        AudioManager.Instance.Play("Ding");
         scheduleMusic();
     }
     public void FailTask()
@@ -103,8 +104,9 @@ public class TaskManager : MonoBehaviour
         distance -= distanceDecayPerFailure;
         timeSinceLastDistanceUpdate = 0;
         activeTasks--;
+        AudioManager.Instance.Play("Fail");
         scheduleMusic();
-        
+        CheckIfLost();
     }
 
     void scheduleMusic()
@@ -119,8 +121,10 @@ public class TaskManager : MonoBehaviour
         AudioManager.Instance.SetScheduledSound(music);
     }
 
-    void CheckIfLost() {
-        if (distance <= 0) {
+    void CheckIfLost()
+    {
+        if (distance <= 0)
+        {
             // TODO go to lose screen
         }
     }

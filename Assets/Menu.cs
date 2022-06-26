@@ -5,18 +5,16 @@ using UnityEngine.SceneManagement;
 public class Menu : MonoBehaviour
 {
     public static bool isPaused = false;  
-    public GameObject PauseMenu;  
-    public GameObject CanvasMenu;  
-    //public GameObject Canvas;  
+    public GameObject PauseMenu;
     CanvasGroup Canvas;  
     // Start is called before the first frame update
     void Start()
     {
         
-        isPaused = true;  
         Canvas = GetComponent<CanvasGroup>();
         PauseMenu.transform.localScale = new Vector3(0, 0, 0);  
           
+        Resume();
     }
 
     // Update is called once per frame
@@ -31,9 +29,6 @@ public class Menu : MonoBehaviour
                 Pause();  
             }
         }
-    }
-    public void pause(){
-        isPaused = true;  
     }
     public void Resume(){
         Canvas.alpha = 0f;  
@@ -58,6 +53,4 @@ public class Menu : MonoBehaviour
     public void quitgame(){
         Application.Quit();  
     }
-    
-    
 }

@@ -6,8 +6,6 @@ using TMPro;
 public sealed class Interactable : MonoBehaviour
 {
     public Task task;
-    public Sprite defaultSprite;
-    public Sprite focusedSprite;
     private SpriteRenderer spriteRenderer;
     private Collider2D collider2d;
     private TMP_Text timer;
@@ -32,7 +30,7 @@ public sealed class Interactable : MonoBehaviour
     {
         if (!isActivated)
         {
-            timer.text = "OK";
+            timer.text = "";
             return;
         }
         timeLeft -= Time.deltaTime;

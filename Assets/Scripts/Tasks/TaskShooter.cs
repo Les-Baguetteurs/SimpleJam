@@ -28,6 +28,7 @@ public class TaskShooter : Task
         aliensShotInt++;
         aliens_shot.SetText(aliensShotInt + "/5 Aliens Shot");
         Destroy(shot_alien);
+        AudioManager.Instance.Play("Shoot");
         if (aliensShotInt >= 5) {
             Cursor.SetCursor(null, new Vector2(0, 0), CursorMode.Auto);
             CompleteTask();
