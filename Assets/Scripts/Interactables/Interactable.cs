@@ -50,13 +50,13 @@ public sealed class Interactable : MonoBehaviour
     public void OnFocused()
     {
         isFocus = true;
-        spriteRenderer.sprite = focusedSprite;
+        spriteRenderer.color = new Color( 1,0,0, 1);
     }
 
     public void OnDefocused()
     {
         isFocus = false;
-        spriteRenderer.sprite = defaultSprite;
+        spriteRenderer.color = new Color (50,50,50,1);
     }
 
     public bool Activate()
