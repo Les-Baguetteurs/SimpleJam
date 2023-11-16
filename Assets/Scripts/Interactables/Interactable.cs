@@ -62,6 +62,15 @@ public sealed class Interactable : MonoBehaviour
         if (isActivated) return false;
         isActivated = true;
         timeLeft = TaskManager.Instance.timePerTask;
+
+        Collider2D[] overlaps = new Collider2D[1];
+        collider2d.OverlapCollider(new ContactFilter2D().NoFilter(), overlaps);
+        if (overlaps[0] != null)
+        {
+            PlayerController player = overlaps[0].GetComponent<PlayerController>();
+            if (player != null)
+                player.SetFocus(this);
+        }
         // TODO set texture to broken
         return true;
     }
