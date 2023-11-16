@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,8 +8,10 @@ public class CameraManager : MonoBehaviour
 {
 
     public GameObject player;
+    public GameObject background;
     public float maxLookDist;
     public float steepness;
+    public float parallaxFactor;
     private PlayerInputActions playerControls;
     private InputAction look;
 
@@ -26,6 +29,11 @@ public class CameraManager : MonoBehaviour
         float deltaY = look.ReadValue<Vector2>().y - Screen.height / 2f;
                 
         gameObject.transform.position = new Vector3(player.transform.position.x + exponentialDecay(deltaX), player.transform.position.y + exponentialDecay(deltaY), -10);
+
+        background.transform.position = new Vector3(
+            transform.position.x + player.transform.position.x* parallaxFactor,
+            transform.position.y + player.transform.position.y * parallaxFactor,
+            10);
     }
 
     float exponentialDecay(float num) {
