@@ -3669,6 +3669,7 @@ MonoBehaviour:
   - {fileID: 1331422077}
   - {fileID: 754093757}
   - {fileID: 39829429}
+  scoreObject: {fileID: 11400000, guid: 054268b3a36c12f44a79ff489e025492, type: 2}
 --- !u!82 &1968135895
 AudioSource:
   m_ObjectHideFlags: 0

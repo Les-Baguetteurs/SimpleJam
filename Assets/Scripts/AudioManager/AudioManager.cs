@@ -59,8 +59,10 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
-        s.source.volume = s.volume * (1f + UnityEngine.Random.Range(-s.volumeVariance / 2f, s.volumeVariance / 2f));
-        s.source.pitch = s.pitch * (1f + UnityEngine.Random.Range(-s.pitchVariance / 2f, s.pitchVariance / 2f));
+        // I feel like this wasn't such a good idea
+
+        // s.source.volume = s.volume * (1f + UnityEngine.Random.Range(-s.volumeVariance / 2f, s.volumeVariance / 2f));
+        // s.source.pitch = s.pitch * (1f + UnityEngine.Random.Range(-s.pitchVariance / 2f, s.pitchVariance / 2f));
 
         s.source.Play();
     }
@@ -95,5 +97,9 @@ public class AudioManager : MonoBehaviour
 		
         nextEventTime += audioSources[flip].clip.length;
         flip = 1 - flip;
+    }
+    public void OnGameOver()
+    {
+        SetScheduledSound("stage1");
     }
 }

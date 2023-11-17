@@ -41,7 +41,7 @@ public class Task : MonoBehaviour
         Instantiate<Task>(this).SetInteractable(interactable);
     }
 
-    public void CloseUI()
+    public virtual void CloseUI()
     {
         Destroy(gameObject);
     }

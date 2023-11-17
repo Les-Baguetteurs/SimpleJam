@@ -29,6 +29,7 @@ public class TaskManager : MonoBehaviour
     int tasksCompleted;
     float nextBreak;
     public Interactable[] tasks;
+    public ScoreObject scoreObject;
 
 
     int activeTasks;
@@ -126,6 +127,8 @@ public class TaskManager : MonoBehaviour
     {
         if (distance <= 0)
         {
+            scoreObject.score = score;
+            AudioManager.Instance.OnGameOver();
             SceneManager.LoadScene("GameoverScene");
         }
     }

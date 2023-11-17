@@ -30,13 +30,17 @@ public class TaskShooter : Task
         Destroy(shot_alien);
         AudioManager.Instance.Play("Shoot");
         if (aliensShotInt >= 5) {
-            Cursor.SetCursor(null, new Vector2(0, 0), CursorMode.Auto);
             CompleteTask();
         }
     }
 
     public void onAsteroidShot(GameObject shot_asteroid) {
-
         FailTask();
+    }
+
+    public override void CloseUI()
+    {
+        Cursor.SetCursor(null, new Vector2(0, 0), CursorMode.Auto);
+        base.CloseUI();
     }
 }
