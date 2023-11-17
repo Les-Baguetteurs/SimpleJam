@@ -18,10 +18,17 @@ public class TaskShooter : Task
         base.Start();
         Cursor.SetCursor(crosshair, new Vector2(11, 11), CursorMode.Auto);
         aliens_shot.SetText("0/5 Aliens Shot");
+
         for (int i = 0; i < aliens.Length; i++) {
-            aliens[i].transform.position = new Vector2(Random.Range(100f, 700f), Random.Range(100f, 350f));
-            asteroids[i].transform.position = new Vector2(Random.Range(100f, 700f), Random.Range(100f, 350f));
+            aliens[i].transform.position = RandPosOnCanvas();
+            asteroids[i].transform.position = RandPosOnCanvas();
         }
+    }
+
+    private Vector2 RandPosOnCanvas()
+    {
+        RectTransform img = canvas.GetComponent<RectTransform>();
+        return (Vector2) img.transform.position + new Vector2(Random.Range(img.rect.xMin + 175, img.rect.xMax - 175), Random.Range(img.rect.yMin + 125, img.rect.yMax - 125));
     }
     public void onAlienShot(GameObject shot_alien)
     {

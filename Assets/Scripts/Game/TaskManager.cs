@@ -129,6 +129,7 @@ public class TaskManager : MonoBehaviour
         {
             scoreObject.score = score;
             AudioManager.Instance.OnGameOver();
+            Cursor.SetCursor(null, new Vector2(0, 0), CursorMode.Auto);
             SceneManager.LoadScene("GameoverScene");
         }
     }
